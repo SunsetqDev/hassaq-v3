@@ -1,0 +1,210 @@
+<!doctype html>
+<html lang="ru">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Hassaq — меню и доставка · Ақтөбе</title>
+<meta name="description" content="Hassaq — кафе быстрого питания в казахском стиле, Актобе: донеры, тантуни, бургеры, пицца. Халал.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Forum&family=Cormorant+Garamond:wght@500;600&family=Poiret+One&family=Manrope:wght@400;500;700;800&display=swap" rel="stylesheet">
+<link rel="preload" as="image" href="assets/ornament.webp">
+<script>
+  /* тема до отрисовки, чтобы не было вспышки: сохранённая или системная */
+  (function(){var t;try{t=localStorage.getItem('hassaq-theme')}catch(e){}
+  if(t!=='light'&&t!=='dark'){t=matchMedia('(prefers-color-scheme: dark)').matches?'dark':'light'}
+  document.documentElement.setAttribute('data-theme',t)})();
+</script>
+<link rel="stylesheet" href="styles.css?v=7">
+</head>
+<body class="locked">
+
+<svg width="0" height="0" style="position:absolute" aria-hidden="true">
+  <defs>
+    <symbol id="bowl" viewBox="0 0 80 48">
+      <g fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round">
+        <path d="M8 22H72C70 36 56 44 40 44S10 36 8 22Z"/>
+        <path d="M18 30C26 26 34 34 42 30S56 26 62 30"/>
+        <path d="M30 16C26 12 34 9 30 4M40 16C36 12 44 9 40 3M50 16C46 12 54 9 50 4"/>
+      </g>
+    </symbol>
+    <symbol id="horn" viewBox="0 0 60 30">
+      <path d="M30 29V19C30 9 22 4 15 6 8 8 7 16 12 18.5 16 20.5 19.5 16.5 17 13.5M30 19C30 9 38 4 45 6 52 8 53 16 48 18.5 44 20.5 40.5 16.5 43 13.5" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"/>
+    </symbol>
+    <symbol id="i-cart" viewBox="0 0 24 24"><path d="M3 4h2l2.2 11h10.6L20 7H6.2M9 20a1 1 0 1 0 0-.01M17 20a1 1 0 1 0 0-.01" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></symbol>
+    <symbol id="i-search" viewBox="0 0 24 24"><path d="M11 18a7 7 0 1 0 0-14 7 7 0 0 0 0 14Zm5-2 4 4" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/></symbol>
+    <symbol id="i-sun" viewBox="0 0 24 24"><g fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"><circle cx="12" cy="12" r="4.2"/><path d="M12 2.5v2M12 19.5v2M2.5 12h2M19.5 12h2M5.3 5.3l1.4 1.4M17.3 17.3l1.4 1.4M5.3 18.7l1.4-1.4M17.3 6.7l1.4-1.4"/></g></symbol>
+    <symbol id="i-moon" viewBox="0 0 24 24"><path d="M20 14.5A8 8 0 0 1 9.5 4a8 8 0 1 0 10.5 10.5Z" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linejoin="round"/></symbol>
+    <!-- мотив қошқар мүйіз (по присланному орнаменту) -->
+    <symbol id="motif" viewBox="0 0 100 76">
+      <g fill="none" stroke="currentColor" stroke-width="13" stroke-linecap="round" stroke-linejoin="round">
+        <path d="M50 33C58 26 70 22 80 25 91 28 94 40 88 47 82 53 72 50 73 43"/>
+        <path d="M50 33C42 26 30 22 20 25 9 28 6 40 12 47 18 53 28 50 27 43"/>
+      </g>
+      <path fill="currentColor" d="M43.5 30H56.5L59 76H41Z"/>
+      <path fill="currentColor" d="M50 1C55 8 64 13 61.5 21.5 59.5 28.5 40.5 28.5 38.5 21.5 36 13 45 8 50 1Z"/>
+    </symbol>
+  </defs>
+</svg>
+
+<!-- ================= INTRO: Hassaq emblem assembles itself (rings, scrolls, cross), flips in 3D, shines ================= -->
+<div class="intro" id="intro">
+  <div class="intro__glow"></div>
+  <div class="intro__pattern" id="introPattern"></div>
+  <div class="intro__rays" id="introRays"></div>
+  <div class="intro__stage" id="introStage">
+    <div class="emb3d" id="emb3d"><svg class="emb" id="emb" viewBox="-110 -110 220 220" aria-hidden="true"></svg></div>
+  </div>
+  <div class="intro__brand" id="introBrand">
+    <svg class="intro__bowl"><use href="#bowl"/></svg>
+    <div class="wordmark">HASSAQ</div>
+    <p class="intro__sub" data-i18n="intro.sub">кафе · Ақтөбе</p>
+  </div>
+  <div class="intro__actions" id="introActions">
+    <button class="enter" id="enterSound"><span data-i18n="intro.enter">Кіру</span><i data-i18n="intro.enterSub">с музыкой ♪</i></button>
+    <button class="enter-mute" id="enterMute" data-i18n="intro.mute">без звука</button>
+  </div>
+</div>
+
+<button class="music" id="music" aria-label="Музыка вкл/выкл">
+  <span class="music__bars"><i></i><i></i><i></i><i></i></span><span class="music__label" data-i18n="music">Күй</span>
+</button>
+
+<!-- ================= TOP BAR + HEADER ================= -->
+<div class="topbar">
+  <nav>
+    <a href="#stories" data-i18n="nav.promo">Акции</a>
+    <a href="#about" data-i18n="nav.about">О нас</a>
+    <a href="#footer" data-i18n="nav.contacts">Контакты</a>
+    <a href="https://www.instagram.com/hassaq.kz/" target="_blank" rel="noopener">Instagram</a>
+  </nav>
+  <span class="topbar__city" data-i18n="topbar.city">Ақтөбе · Халал ҚМДБ</span>
+</div>
+
+<header class="header" id="header">
+  <a href="#top" class="logo"><img src="assets/ornament.webp" alt=""><span>HASSAQ</span></a>
+  <label class="search"><svg><use href="#i-search"/></svg><input id="search" type="search" placeholder="Поиск по меню" data-i18n-ph="search.ph" autocomplete="off"></label>
+  <button class="pill" data-order data-i18n="pill.delivery">Доставка</button>
+  <div class="lang" id="lang" role="group" aria-label="Язык · Тіл"><span class="lang__knob" id="langKnob"></span><button data-lang-set="kk" aria-pressed="false">ҚАЗ</button><button data-lang-set="ru" aria-pressed="false">РУС</button></div>
+  <div class="theme" id="theme" role="group" aria-label="Тема сайта">
+    <span class="theme__knob" id="themeKnob"></span>
+    <button data-theme-set="light" aria-pressed="false"><svg><use href="#i-sun"/></svg><span data-i18n="theme.light">Ақ</span></button>
+    <button data-theme-set="dark" aria-pressed="false"><svg><use href="#i-moon"/></svg><span data-i18n="theme.dark">Қара</span></button>
+  </div>
+  <button class="cart-btn" id="cartBtn" aria-label="Корзина"><svg><use href="#i-cart"/></svg><b id="cartCount">0</b></button>
+</header>
+
+<main id="top">
+  <!-- ================= STORIES BAND ================= -->
+  <section class="stories" id="stories">
+    <div class="stories__row" id="storiesRow"></div>
+  </section>
+
+  <!-- ================= HERO CAROUSEL ================= -->
+  <section class="banner" id="banner">
+    <div class="banner__slides">
+      <article class="slide is-active" data-i="0">
+        <div class="slide__bg"><img src="assets/yurt-blur.webp" alt=""></div>
+        <div class="slide__copy">
+          <p class="slide__kz" data-i18n="s1.kz">Қош келдіңіз!</p>
+          <h1 data-i18n-html="s1.h">Тепло юрты.<br><em>Вкус Hassaq.</em></h1>
+          <p data-i18n="s1.p">Кафе быстрого питания в казахском стиле: донеры, тантуни, бургеры и пицца.</p>
+          <a class="btn btn--orange" href="#menu" data-i18n="s1.btn">Смотреть меню</a>
+        </div>
+        <img class="slide__orn" src="assets/ornament.webp" alt="">
+      </article>
+      <article class="slide slide--terra" data-i="1">
+        <div class="slide__pattern"></div>
+        <div class="slide__copy">
+          <p class="slide__kz" data-i18n="s2.kz">Фирменный</p>
+          <h1>Хас-бургер<br><em>3 190 тг</em></h1>
+          <p data-i18n="s2.p">Говядина, сыр, овощи и фирменный соус Hassaq. 310 г.</p>
+          <a class="btn btn--cream" href="#cat-burger" data-i18n="s2.btn">В меню</a>
+        </div>
+        <img class="slide__orn" src="assets/ornament.webp" alt="">
+      </article>
+      <article class="slide slide--brown" data-i="2">
+        <div class="slide__pattern"></div>
+        <div class="slide__copy">
+          <p class="slide__kz" data-i18n="s3.kz">Үйге жеткізу</p>
+          <h1 data-i18n-html="s3.h">Голоден?<br><em>Привезём.</em></h1>
+          <p data-i18n="s3.p">Заказывай Hassaq с доставкой через Glovo по Актобе.</p>
+          <button class="btn btn--orange" data-order data-i18n="s3.btn">Заказать доставку</button>
+        </div>
+        <img class="slide__orn" src="assets/ornament.webp" alt="">
+      </article>
+    </div>
+    <div class="banner__dots" id="bannerDots"><button></button><button></button><button></button></div>
+  </section>
+
+  <!-- ================= MENU: sidebar + grid ================= -->
+  <section class="shop" id="menu">
+    <aside class="side" id="side"></aside>
+    <div class="catalog">
+      <div class="catalog__head">
+        <h2 data-i18n-html="catalog.h">Мәзір <span>Меню Hassaq</span></h2>
+        <p class="catalog__note" data-i18n="catalog.note">Цены в тенге. Актуальные цены и акции — в Glovo.</p>
+      </div>
+      <div id="catalog"></div>
+      <p class="empty" id="empty" data-i18n="empty">Ничего не нашлось. Попробуй другое слово.</p>
+    </div>
+  </section>
+
+  <!-- ================= ABOUT ================= -->
+  <section class="about" id="about">
+    <div class="about__photo"><img src="assets/yurt.webp" alt="Интерьер в казахском стиле"><div class="about__kerege"></div></div>
+    <div class="about__copy">
+      <p class="eyebrow" data-i18n="about.eyebrow">Киіз үй · О нас</p>
+      <h2 data-i18n-html="about.h">Казахское гостеприимство<br><em>и скорость фастфуда</em></h2>
+      <p data-i18n="about.p">Hassaq — кафе быстрого питания в Актобе, оформленное в казахском стиле. Горячие донеры и тантуни, бургеры с котлетой на гриле и пицца. Порции щедрые, всё халал, а гостя встречают как дома.</p>
+      <div class="about__stats"><div><b>11</b><span data-i18n="about.burgers">бургеров</span></div><div><b>5</b><span data-i18n="about.pizzas">пицц</span></div><div><b>15</b><span data-i18n="about.doners">донера</span></div></div>
+    </div>
+  </section>
+</main>
+
+<footer class="footer" id="footer">
+  <div class="footer__top">
+    <a href="#top" class="logo logo--light"><img src="assets/ornament.webp" alt=""><span>HASSAQ</span></a>
+    <div class="footer__cols">
+      <div><b data-i18n="f.menu">Меню</b><a href="#cat-doner" data-i18n="cat.doner">Донеры</a><a href="#cat-burger" data-i18n="cat.burger">Бургеры</a><a href="#cat-pizza" data-i18n="cat.pizza">Пицца</a><a href="#cat-drinks" data-i18n="cat.drinks">Напитки</a></div>
+      <div><b>Hassaq</b><a href="#about" data-i18n="f.about">О нас</a><a href="#stories" data-i18n="f.promo">Акции</a><a href="https://2gis.kz/kk/aktobe/firm/70000001056471109" target="_blank" rel="noopener" data-i18n="f.address">Адрес в 2ГИС</a></div>
+      <div><b data-i18n="f.social">Мы в сети</b><a href="https://www.instagram.com/hassaq.kz/" target="_blank" rel="noopener">Instagram @hassaq.kz</a><a href="https://glovoapp.com/ru/kz/aktobe/stores/hassaq-akx" target="_blank" rel="noopener">Glovo</a><a href="https://eda.yandex.kz/ru-kz/Actobe/r/hassaq" target="_blank" rel="noopener">Яндекс Еда</a></div>
+    </div>
+  </div>
+  <div class="footer__bottom"><span>© 2026 Hassaq · Ақтөбе</span><span data-i18n="f.bye">Ас болсын!</span></div>
+</footer>
+
+<!-- cart drawer -->
+<div class="drawer" id="drawer" aria-hidden="true">
+  <div class="drawer__shade" data-close></div>
+  <aside class="drawer__panel">
+    <div class="drawer__head"><h3 data-i18n="cart.title">Корзина</h3><button data-close aria-label="Закрыть">✕</button></div>
+    <div class="drawer__list" id="cartList"></div>
+    <div class="drawer__foot">
+      <div class="drawer__total"><span data-i18n="cart.total">Итого</span><b id="cartTotal">0 тг</b></div>
+      <button class="btn btn--orange btn--block" data-order data-i18n="cart.checkout">Заказать</button>
+      <p data-i18n="cart.note">Заказ оформляется в приложении Glovo. Корзина здесь — чтобы собрать заказ и посчитать сумму.</p>
+    </div>
+  </aside>
+</div>
+
+<!-- story viewer -->
+<div class="story" id="story" aria-hidden="true">
+  <div class="story__card" id="storyCard">
+    <div class="story__bars" id="storyBars"></div>
+    <button class="story__close" data-sclose aria-label="Закрыть">✕</button>
+    <div class="story__body" id="storyBody"></div>
+    <button class="story__nav story__nav--prev" id="storyPrev" aria-label="Назад"></button>
+    <button class="story__nav story__nav--next" id="storyNext" aria-label="Вперёд"></button>
+  </div>
+</div>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.13.0/gsap.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.13.0/ScrollTrigger.min.js"></script>
+<script src="menu-v3.js?v=7"></script>
+<script src="i18n.js?v=7"></script>
+<script src="order.js?v=7"></script>
+<script src="music.js?v=7"></script>
+<script src="main.js?v=7"></script>
+</body>
+</html>
