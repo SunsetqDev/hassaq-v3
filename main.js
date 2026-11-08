@@ -312,7 +312,7 @@
      ========================================================= */
   const CATS = ['doner', 'tantuni', 'burger', 'chicken', 'pizza', 'extra', 'drinks'];
   // category thumbnails (real Hassaq photos)
-  const CAT_THUMB = { doner: 'y3021591284', tantuni: 'y3021643033', burger: 'y3021590799', chicken: 'y3021643131', extra: 'y3021846277', drinks: 'y3021844505' };
+  const CAT_THUMB = { doner: 'y3021591284', tantuni: 'y3021643033', burger: 'y3021590799', chicken: 'y3021643131', pizza: 'pizza-yandex-margherita', extra: 'y3021846277', drinks: 'y3021844505' };
   const MENU = (window.HASSAQ_MENU || []).map((it, i) => ({ ...it, id: it.photo || `${it.cat}-${i}` }));
   const side = $('#side'), catalog = $('#catalog');
   let spies = [], firstBuild = true;
@@ -345,7 +345,8 @@
       const a = document.createElement('a');
       a.href = `#cat-${key}`; a.dataset.cat = key;
       const thumb = CAT_THUMB[key];
-      a.innerHTML = `<span class="side__img">${thumb ? `<img src="assets/menu/thumb/${thumb}.webp" alt="" loading="lazy" decoding="async" width="44" height="44">` : '<svg viewBox="0 0 80 48"><use href="#bowl"/></svg>'}</span><span class="side__name">${HQ.t('cat.' + key)}</span><i>${items.length}</i>`;
+      const thumbSrc = key === 'pizza' ? `assets/menu/${thumb}.jpg` : `assets/menu/thumb/${thumb}.webp`;
+      a.innerHTML = `<span class="side__img">${thumb ? `<img src="${thumbSrc}" alt="" loading="lazy" decoding="async" width="44" height="44">` : '<svg viewBox="0 0 80 48"><use href="#bowl"/></svg>'}</span><span class="side__name">${HQ.t('cat.' + key)}</span><i>${items.length}</i>`;
       side.appendChild(a);
       const sec = document.createElement('section');
       sec.className = 'cat'; sec.id = `cat-${key}`;
