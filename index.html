@@ -7,15 +7,21 @@
 <meta name="description" content="Hassaq — кафе быстрого питания в казахском стиле, Актобе: донеры, тантуни, бургеры, пицца. Халал.">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Forum&family=Cormorant+Garamond:wght@500;600&family=Poiret+One&family=Manrope:wght@400;500;700;800&display=swap" rel="stylesheet">
-<link rel="preload" as="image" href="assets/ornament.webp">
+<link href="https://fonts.googleapis.com/css2?family=Forum&family=Poiret+One&family=Manrope:wght@400;500;700;800&display=swap" rel="stylesheet">
+<link rel="preload" as="image" href="assets/ornament-96.webp">
 <script>
   /* тема до отрисовки, чтобы не было вспышки: сохранённая или системная */
   (function(){var t;try{t=localStorage.getItem('hassaq-theme')}catch(e){}
   if(t!=='light'&&t!=='dark'){t=matchMedia('(prefers-color-scheme: dark)').matches?'dark':'light'}
   document.documentElement.setAttribute('data-theme',t)})();
+  /* облегчённый режим для слабых устройств: мало ядер/памяти, экономия трафика, медленная сеть,
+     «уменьшить движение». Принудительно: ?lite=1 (включить) или ?lite=0 (выключить) */
+  (function(){var n=navigator,c=n.connection||{},q,l;
+  try{q=new URLSearchParams(location.search).get('lite')}catch(e){}
+  l=q==='1'||(q!=='0'&&((n.hardwareConcurrency&&n.hardwareConcurrency<=4)||(n.deviceMemory&&n.deviceMemory<=2)||c.saveData||/(^|-)2g/.test(c.effectiveType||'')||matchMedia('(prefers-reduced-motion: reduce)').matches));
+  if(l)document.documentElement.classList.add('lite')})();
 </script>
-<link rel="stylesheet" href="styles.css?v=7">
+<link rel="stylesheet" href="styles.css?v=12">
 </head>
 <body class="locked">
 
@@ -74,7 +80,6 @@
 <div class="topbar">
   <nav>
     <a href="#stories" data-i18n="nav.promo">Акции</a>
-    <a href="#about" data-i18n="nav.about">О нас</a>
     <a href="#footer" data-i18n="nav.contacts">Контакты</a>
     <a href="https://www.instagram.com/hassaq.kz/" target="_blank" rel="noopener">Instagram</a>
   </nav>
@@ -82,7 +87,7 @@
 </div>
 
 <header class="header" id="header">
-  <a href="#top" class="logo"><img src="assets/ornament.webp" alt=""><span>HASSAQ</span></a>
+  <a href="#top" class="logo"><img src="assets/ornament-96.webp" width="46" height="46" alt=""><span>HASSAQ</span></a>
   <label class="search"><svg><use href="#i-search"/></svg><input id="search" type="search" placeholder="Поиск по меню" data-i18n-ph="search.ph" autocomplete="off"></label>
   <button class="pill" data-order data-i18n="pill.delivery">Доставка</button>
   <div class="lang" id="lang" role="group" aria-label="Язык · Тіл"><span class="lang__knob" id="langKnob"></span><button data-lang-set="kk" aria-pressed="false">ҚАЗ</button><button data-lang-set="ru" aria-pressed="false">РУС</button></div>
@@ -104,14 +109,14 @@
   <section class="banner" id="banner">
     <div class="banner__slides">
       <article class="slide is-active" data-i="0">
-        <div class="slide__bg"><img src="assets/yurt-blur.webp" alt=""></div>
+        <div class="slide__bg"><img src="assets/yurt-blur.webp" alt="" fetchpriority="high" decoding="async"></div>
         <div class="slide__copy">
           <p class="slide__kz" data-i18n="s1.kz">Қош келдіңіз!</p>
           <h1 data-i18n-html="s1.h">Тепло юрты.<br><em>Вкус Hassaq.</em></h1>
           <p data-i18n="s1.p">Кафе быстрого питания в казахском стиле: донеры, тантуни, бургеры и пицца.</p>
           <a class="btn btn--orange" href="#menu" data-i18n="s1.btn">Смотреть меню</a>
         </div>
-        <img class="slide__orn" src="assets/ornament.webp" alt="">
+        <img class="slide__orn" src="assets/ornament-640.webp" width="640" height="640" alt="" decoding="async">
       </article>
       <article class="slide slide--terra" data-i="1">
         <div class="slide__pattern"></div>
@@ -121,7 +126,7 @@
           <p data-i18n="s2.p">Говядина, сыр, овощи и фирменный соус Hassaq. 310 г.</p>
           <a class="btn btn--cream" href="#cat-burger" data-i18n="s2.btn">В меню</a>
         </div>
-        <img class="slide__orn" src="assets/ornament.webp" alt="">
+        <img class="slide__orn" src="assets/ornament-640.webp" width="640" height="640" alt="" decoding="async">
       </article>
       <article class="slide slide--brown" data-i="2">
         <div class="slide__pattern"></div>
@@ -131,7 +136,7 @@
           <p data-i18n="s3.p">Заказывай Hassaq с доставкой через Glovo по Актобе.</p>
           <button class="btn btn--orange" data-order data-i18n="s3.btn">Заказать доставку</button>
         </div>
-        <img class="slide__orn" src="assets/ornament.webp" alt="">
+        <img class="slide__orn" src="assets/ornament-640.webp" width="640" height="640" alt="" decoding="async">
       </article>
     </div>
     <div class="banner__dots" id="bannerDots"><button></button><button></button><button></button></div>
@@ -150,24 +155,22 @@
     </div>
   </section>
 
-  <!-- ================= ABOUT ================= -->
-  <section class="about" id="about">
-    <div class="about__photo"><img src="assets/yurt.webp" alt="Интерьер в казахском стиле"><div class="about__kerege"></div></div>
-    <div class="about__copy">
-      <p class="eyebrow" data-i18n="about.eyebrow">Киіз үй · О нас</p>
-      <h2 data-i18n-html="about.h">Казахское гостеприимство<br><em>и скорость фастфуда</em></h2>
-      <p data-i18n="about.p">Hassaq — кафе быстрого питания в Актобе, оформленное в казахском стиле. Горячие донеры и тантуни, бургеры с котлетой на гриле и пицца. Порции щедрые, всё халал, а гостя встречают как дома.</p>
-      <div class="about__stats"><div><b>11</b><span data-i18n="about.burgers">бургеров</span></div><div><b>5</b><span data-i18n="about.pizzas">пицц</span></div><div><b>15</b><span data-i18n="about.doners">донера</span></div></div>
+  <section class="about-mini" id="visit" aria-labelledby="about-title">
+    <div class="about-mini__copy">
+      <p class="about-mini__label">HASSAQ · АҚТӨБЕ</p>
+      <h2 id="about-title" data-i18n="aboutMini.title">О нас</h2>
+      <p data-i18n="aboutMini.text">Казахское гостеприимство и любимая еда на каждый день. Донеры, бургеры и пицца — для обеда, встречи с друзьями или уютного вечера дома.</p>
     </div>
+    <a class="about-mini__link" href="https://2gis.kz/aktobe/branches/70000001100802005" target="_blank" rel="noopener"><span data-i18n="aboutMini.link">Наши адреса</span><span aria-hidden="true">↗</span></a>
   </section>
 </main>
 
 <footer class="footer" id="footer">
   <div class="footer__top">
-    <a href="#top" class="logo logo--light"><img src="assets/ornament.webp" alt=""><span>HASSAQ</span></a>
+    <a href="#top" class="logo logo--light"><img src="assets/ornament-96.webp" width="46" height="46" alt="" loading="lazy" decoding="async"><span>HASSAQ</span></a>
     <div class="footer__cols">
       <div><b data-i18n="f.menu">Меню</b><a href="#cat-doner" data-i18n="cat.doner">Донеры</a><a href="#cat-burger" data-i18n="cat.burger">Бургеры</a><a href="#cat-pizza" data-i18n="cat.pizza">Пицца</a><a href="#cat-drinks" data-i18n="cat.drinks">Напитки</a></div>
-      <div><b>Hassaq</b><a href="#about" data-i18n="f.about">О нас</a><a href="#stories" data-i18n="f.promo">Акции</a><a href="https://2gis.kz/kk/aktobe/firm/70000001056471109" target="_blank" rel="noopener" data-i18n="f.address">Адрес в 2ГИС</a></div>
+      <div><b>Hassaq</b><a href="#stories" data-i18n="f.promo">Акции</a><a href="https://2gis.kz/aktobe/branches/70000001100802005" target="_blank" rel="noopener" data-i18n="f.address">Адрес в 2ГИС</a></div>
       <div><b data-i18n="f.social">Мы в сети</b><a href="https://www.instagram.com/hassaq.kz/" target="_blank" rel="noopener">Instagram @hassaq.kz</a><a href="https://glovoapp.com/ru/kz/aktobe/stores/hassaq-akx" target="_blank" rel="noopener">Glovo</a><a href="https://eda.yandex.kz/ru-kz/Actobe/r/hassaq" target="_blank" rel="noopener">Яндекс Еда</a></div>
     </div>
   </div>
@@ -201,10 +204,10 @@
 
 <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.13.0/gsap.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.13.0/ScrollTrigger.min.js"></script>
-<script src="menu-v3.js?v=7"></script>
-<script src="i18n.js?v=7"></script>
-<script src="order.js?v=7"></script>
-<script src="music.js?v=7"></script>
-<script src="main.js?v=7"></script>
+<script src="menu-v3.js?v=12"></script>
+<script src="i18n.js?v=12"></script>
+<script src="order.js?v=12"></script>
+<script src="music.js?v=12"></script>
+<script src="main.js?v=12"></script>
 </body>
 </html>

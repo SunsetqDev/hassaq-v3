@@ -1,0 +1,52 @@
+{
+  "restaurant": "Hassaq dalida",
+  "page": "https://eda.yandex.kz/ru-kz/Actobe/r/hassaq",
+  "checked": "2026-11-08",
+  "images": [
+    {
+      "name": "Пицца Мексика",
+      "image": "https://eda.yandex/images/19396445/09b848cf849c42558cd7544e30e0b090-300x300.jpeg",
+      "file": "assets/menu/pizza-yandex-mexica.jpg"
+    },
+    {
+      "name": "Пицца Маргарита",
+      "image": "https://eda.yandex/images/17763632/be38c43b5be0471fb16a1137981333ba-300x300.jpeg",
+      "file": "assets/menu/pizza-yandex-margherita.jpg"
+    },
+    {
+      "name": "Пицца Барбекю",
+      "image": "https://eda.yandex/images/18022535/5715620741034f058d69d2c0edf5ead6-300x300.jpeg",
+      "file": "assets/menu/pizza-yandex-bbq.jpg"
+    },
+    {
+      "name": "Курица с сырном соусе",
+      "image": "https://eda.yandex/images/19853791/1b42ded57a91408fa6af47e6d754818e-300x300.jpeg",
+      "file": "assets/menu/pizza-yandex-chicken-cheese.jpg"
+    },
+    {
+      "name": "Пицца Охотник",
+      "image": "https://eda.yandex/images/17635794/2dc89a64d847434f929b30b6c1478c6d-300x300.jpeg",
+      "file": "assets/menu/pizza-yandex-hunter.jpg"
+    },
+    {
+      "name": "Пицца Пепперони",
+      "image": "https://eda.yandex/images/17635794/2a8e253740ce4972bd089ee29494bb4a-300x300.jpeg",
+      "file": "assets/menu/pizza-yandex-pepperoni.jpg"
+    },
+    {
+      "name": "Пицца Болоньезе",
+      "image": "https://eda.yandex/images/20022421/067cfccaeba44283ad79d61a7d010ec1-300x300.jpeg",
+      "file": "assets/menu/pizza-yandex-bolognese.jpg"
+    },
+    {
+      "name": "Пицца 4 сезона",
+      "image": "https://eda.yandex/images/20260744/e8e819cdbbd84c2892f0794fe4d0421e-300x300.jpeg",
+      "file": "assets/menu/pizza-yandex-four-seasons.jpg"
+    },
+    {
+      "name": "Пицца Цезарь",
+      "image": "https://eda.yandex/images/20194341/f2622efb5b264f2bbc463472cc06e0b9-300x300.jpeg",
+      "file": "assets/menu/pizza-yandex-caesar.jpg"
+    }
+  ]
+}

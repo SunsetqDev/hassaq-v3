@@ -4,6 +4,23 @@
   const $$ = (s, c = document) => [...c.querySelectorAll(s)];
   const reduce = matchMedia('(prefers-reduced-motion:reduce)').matches;
   const isMobile = matchMedia('(max-width:900px)').matches;
+  const html = document.documentElement;
+  let lite = html.classList.contains('lite');
+  const onLite = [];   // что выключить, если устройство окажется слабым
+  function goLite() { if (lite) return; lite = true; html.classList.add('lite'); onLite.forEach(f => f()); }
+  // замер кадров во время заставки: если меньше ~40 кадров/с — включаем облегчённый режим
+  if (!lite && !/[?&]lite=0/.test(location.search)) {
+    let n = 0, t0 = 0, slow = 0, last = 0, frames = 0;
+    const tick = t => {
+      if (!t0) t0 = last = t;
+      // считаем только видимую вкладку и без больших пауз (свёрнутое окно, переключение вкладки)
+      if (document.hidden || t - last > 1000) { n = 0; t0 = t; slow = 0; }
+      last = t;
+      if (++n % 30 === 0) { const fps = 30000 / (t - t0); t0 = t; if (fps < 40) slow++; else slow = 0; if (slow >= 2) return goLite(); }
+      if (++frames < 600) requestAnimationFrame(tick);
+    };
+    requestAnimationFrame(tick);
+  }
   const fmt = n => n.toLocaleString('ru-RU').replace(/ /g, ' ') + ' тг';
   const store = {
     get(k, d) { try { return JSON.parse(localStorage.getItem(k)) ?? d; } catch { return d; } },
@@ -150,7 +167,7 @@
       // 3. sixteen scroll pieces flip in around the ring, one after another
       .to(pieces, { x: 0, y: 0, rotation: 0, scaleX: 1, opacity: 1, duration: .8 * T, ease: 'back.out(1.6)', stagger: { each: .045 } }, 1.35)
       // 4. the whole sign turns over in 3D, the background bursts with the pattern
-      .fromTo(emb3d, { rotationY: 0 }, { rotationY: 360, duration: 1.4 * T, ease: 'power3.inOut' }, 2.35)
+      .fromTo(emb3d, { rotationY: 0 }, { rotationY: lite ? 0 : 360, duration: 1.4 * T, ease: 'power3.inOut' }, 2.35)
       .fromTo(emb3d, { scale: 1 }, { scale: 1.08, duration: .7, ease: 'power2.out', yoyo: true, repeat: 1 }, 2.35)
       .fromTo('#introPattern', { opacity: 0, scale: 1.5 }, { opacity: .32, scale: 1, duration: .9, ease: 'expo.out' }, 2.9)
       .to('#introPattern', { opacity: .07, duration: 1.4, ease: 'power2.out' }, 3.8)
@@ -161,7 +178,8 @@
       .fromTo('#introBrand', { y: 30, opacity: 0 }, { y: 0, opacity: 1, duration: 1, ease: 'expo.out' }, 3.4)
       .fromTo('.wordmark', { letterSpacing: '.7em' }, { letterSpacing: '.16em', duration: 1.4, ease: 'expo.out' }, 3.4)
       .fromTo('#introActions', { y: 20, opacity: 0 }, { y: 0, opacity: 1, duration: .8, ease: 'expo.out' }, 3.8)
-      .add(() => { intro.classList.add('is-ready'); spin.play(); idle.play(); gsap.to('#introRays', { rotation: 360, duration: 120, ease: 'none', repeat: -1 }); }, 4.3);
+      .add(() => { intro.classList.add('is-ready'); if (lite) return; spin.play(); idle.play(); gsap.to('#introRays', { rotation: 360, duration: 120, ease: 'none', repeat: -1 }); }, 4.3);
+    onLite.push(() => { spin.pause(); idle.pause(); gsap.killTweensOf('#introRays'); gsap.set(emb3d, { rotationY: 0 }); });
   })();
 
   function enter(withSound) {
@@ -220,10 +238,10 @@
     { id: 'burgers', photo: 'y3021590801', href: '#cat-burger', bg: 'brown' },
     { id: 'chicken', photo: 'y3021643131', href: '#cat-chicken', bg: 'terra' },
     { id: 'tantuni', photo: 'y3021643033', href: '#cat-tantuni', bg: 'brown' },
-    { id: 'pizza', face: '<b>Пицца</b>', href: '#cat-pizza', bg: 'terra' },
+    { id: 'pizza', photo: 'pizza-yandex-margherita', href: '#cat-pizza', bg: 'terra' },
     { id: 'drinks', photo: 'y3021844505', href: '#cat-drinks', bg: 'brown' },
-    { id: 'yurt', img: 'assets/story-yurt.webp', href: '#about', bg: 'brown' },
-    { id: 'glovo', face: '<b>Glovo</b>', href: GLOVO, bg: 'terra' }
+    { id: 'yurt', img: 'assets/story-yurt.webp', href: '#visit', bg: 'brown' },
+    { id: 'glovo', photo: 'y3021590799', href: GLOVO, bg: 'terra' }
   ];
   const seen = new Set(store.get('hassaq-seen', []));
   const row = $('#storiesRow');
@@ -235,7 +253,7 @@
       b.innerHTML = `<span class="st__ring"><span class="st__in" style="background:${s.bg === 'brown' ? 'var(--brown-2)' : 'var(--terra)'}">${s.face || ''}</span></span><span class="st__label">${HQ.story(s.id)[0]}</span>`;
       const inner = $('.st__in', b);
       if (s.img) inner.innerHTML = `<img src="${s.img}" alt="">`;
-      else if (s.photo) { inner.innerHTML = '<svg viewBox="0 0 80 48"><use href="#bowl"/></svg>'; photo(inner, s.photo, '', true); }
+      else if (s.photo) { inner.innerHTML = '<svg viewBox="0 0 80 48"><use href="#bowl"/></svg>'; photo(inner, s.photo, '', true, true); }
       b.addEventListener('click', () => openStory(i));
       row.appendChild(b);
     });
@@ -254,11 +272,11 @@
     const tx = HQ.story(s.id);
     const ext = s.href.startsWith('http');
     const grad = s.bg === 'brown' ? '#6b3a22,#2a140b' : '#b8432a,#5e1a0e';
-    const img = s.img || (s.photo ? `assets/menu/${s.photo}.jpg` : '');
-    const bg = `<div class="sb__bg" style="background:radial-gradient(90% 70% at 50% 30%,${grad})">${img ? `<img src="${img}" alt="">` : ''}</div>`;
+    const img = s.img || (s.photo ? `assets/menu/${s.photo}.${s.photo.startsWith('pizza-yandex-') ? 'jpg' : 'webp'}` : '');
+    const bg = `<div class="sb__bg" style="background:radial-gradient(90% 70% at 50% 30%,${grad})">${img ? `<img src="${img}" alt="${tx[2]}" decoding="async">` : ''}</div>`;
     body.innerHTML = `<div class="sb">${bg}<p class="sb__kz">${tx[1]}</p><h3>${tx[2]}</h3><p>${tx[3]}</p>
       ${s.id === 'glovo' ? `<button class="btn btn--orange" data-order data-sclose>${tx[4]}</button>` : `<a class="btn btn--orange" href="${s.href}" ${ext ? 'target="_blank" rel="noopener"' : 'data-sclose'}>${tx[4]}</a>`}</div>`;
-    const sbImg = $('.sb__bg img', body); if (sbImg) sbImg.onerror = () => { sbImg.style.display = 'none'; };
+    const sbImg = $('.sb__bg img', body); if (sbImg) sbImg.onerror = () => { if (sbImg.src.endsWith('.webp') && s.photo) { sbImg.src = `assets/menu/${s.photo}.jpg`; } else { sbImg.onerror = null; sbImg.style.display = 'none'; } };
     gsap.from('.sb > *:not(.sb__bg):not(.sb__orn)', { y: 20, opacity: 0, stagger: .06, duration: .6, ease: 'expo.out' });
     $$('i', bars).forEach((el, k) => gsap.set(el, { scaleX: k < i ? 1 : 0 }));
     storyTween && storyTween.kill();
@@ -305,15 +323,17 @@
     d.innerHTML = `<svg viewBox="0 0 80 48"><use href="#bowl"/></svg>${label ? `<em>${label}</em>` : ''}`;
     return d;
   }
-  function photo(slot, slug, label, noPh) {
+  function photo(slot, slug, label, noPh, small) {
     if (!noPh) slot.appendChild(ph(label));
     if (!slug) return;
-    const exts = ['jpg', 'webp', 'png', 'jpeg']; let i = 0;
+    const exts = slug.startsWith('pizza-yandex-') ? ['jpg'] : ['webp', 'jpg']; let i = 0;   // все фото меню есть в webp; jpg — запасной вариант
+    if (slug.startsWith('pizza-yandex-')) small = false;
+    const dir = small ? 'assets/menu/thumb/' : 'assets/menu/';
     const im = new Image(); im.alt = label || ''; im.loading = 'lazy'; im.decoding = 'async';
     im.style.cssText = 'position:absolute;inset:0;width:100%;height:100%;object-fit:cover;opacity:0;transition:opacity .6s';
     im.onload = () => { im.style.opacity = 1; };
-    im.onerror = () => { if (++i < exts.length) im.src = `assets/menu/${slug}.${exts[i]}`; else im.style.display = 'none'; };
-    im.src = `assets/menu/${slug}.${exts[0]}`;
+    im.onerror = () => { if (small && i === 0) { small = false; im.src = `assets/menu/${slug}.webp`; return; } if (++i < exts.length) im.src = `assets/menu/${slug}.${exts[i]}`; else im.style.display = 'none'; };
+    im.src = `${dir}${slug}.${exts[0]}`;
     slot.appendChild(im);
   }
 
@@ -325,7 +345,7 @@
       const a = document.createElement('a');
       a.href = `#cat-${key}`; a.dataset.cat = key;
       const thumb = CAT_THUMB[key];
-      a.innerHTML = `<span class="side__img">${thumb ? `<img src="assets/menu/${thumb}.jpg" alt="" loading="lazy">` : '<svg viewBox="0 0 80 48"><use href="#bowl"/></svg>'}</span><span class="side__name">${HQ.t('cat.' + key)}</span><i>${items.length}</i>`;
+      a.innerHTML = `<span class="side__img">${thumb ? `<img src="assets/menu/thumb/${thumb}.webp" alt="" loading="lazy" decoding="async" width="44" height="44">` : '<svg viewBox="0 0 80 48"><use href="#bowl"/></svg>'}</span><span class="side__name">${HQ.t('cat.' + key)}</span><i>${items.length}</i>`;
       side.appendChild(a);
       const sec = document.createElement('section');
       sec.className = 'cat'; sec.id = `cat-${key}`;
@@ -435,7 +455,7 @@
   });
   langBox.addEventListener('click', e => { const b = e.target.closest('[data-lang-set]'); if (b) HQ.set(b.dataset.langSet); });
   addEventListener('hassaq-lang', () => {
-    gsap.fromTo('#catalog, #storiesRow, .banner, .about__copy', { opacity: .3 }, { opacity: 1, duration: .5 });
+    gsap.fromTo('#catalog, #storiesRow, .banner, .about-mini', { opacity: .3 }, { opacity: 1, duration: .5 });
     renderStories(); buildCatalog(); renderCart(); syncLang(); syncSwitch();
     const q = $('#search').value; if (q) $('#search').dispatchEvent(new Event('input'));
     if (window.HassaqMusic && HassaqMusic.mode === 'file') $('.music__label').textContent = 'Көңіл толқыны';
@@ -444,7 +464,11 @@
   document.fonts && document.fonts.ready.then(syncLang);
   addEventListener('resize', syncLang);
 
-  /* ---------- about reveal ---------- */
-  gsap.from('.about__photo', { clipPath: 'inset(100% 0 0 0)', duration: 1.4, ease: 'expo.out', scrollTrigger: { trigger: '.about', start: 'top 80%' } });
-  gsap.from('.about__copy > *', { y: 30, opacity: 0, stagger: .08, duration: 1, ease: 'expo.out', scrollTrigger: { trigger: '.about', start: 'top 75%' } });
+  /* ---------- пауза анимаций вне экрана ---------- */
+  if ('IntersectionObserver' in window) {
+    const io = new IntersectionObserver(es => es.forEach(e => e.target.classList.toggle('is-offscreen', !e.isIntersecting)), { rootMargin: '100px' });
+    $$('.banner, .about-mini').forEach(el => io.observe(el));
+  }
+
+  if (!reduce) gsap.from('.about-mini', { y: 18, duration: .7, ease: 'power2.out', scrollTrigger: { trigger: '.about-mini', start: 'top 92%', once: true } });
 })();
