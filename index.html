@@ -21,7 +21,7 @@
   l=q==='1'||(q!=='0'&&((n.hardwareConcurrency&&n.hardwareConcurrency<=4)||(n.deviceMemory&&n.deviceMemory<=2)||c.saveData||/(^|-)2g/.test(c.effectiveType||'')||matchMedia('(prefers-reduced-motion: reduce)').matches));
   if(l)document.documentElement.classList.add('lite')})();
 </script>
-<link rel="stylesheet" href="styles.css?v=12">
+<link rel="stylesheet" href="styles.css?v=14">
 </head>
 <body class="locked">
 
@@ -37,7 +37,6 @@
     <symbol id="horn" viewBox="0 0 60 30">
       <path d="M30 29V19C30 9 22 4 15 6 8 8 7 16 12 18.5 16 20.5 19.5 16.5 17 13.5M30 19C30 9 38 4 45 6 52 8 53 16 48 18.5 44 20.5 40.5 16.5 43 13.5" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"/>
     </symbol>
-    <symbol id="i-cart" viewBox="0 0 24 24"><path d="M3 4h2l2.2 11h10.6L20 7H6.2M9 20a1 1 0 1 0 0-.01M17 20a1 1 0 1 0 0-.01" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></symbol>
     <symbol id="i-search" viewBox="0 0 24 24"><path d="M11 18a7 7 0 1 0 0-14 7 7 0 0 0 0 14Zm5-2 4 4" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/></symbol>
     <symbol id="i-sun" viewBox="0 0 24 24"><g fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"><circle cx="12" cy="12" r="4.2"/><path d="M12 2.5v2M12 19.5v2M2.5 12h2M19.5 12h2M5.3 5.3l1.4 1.4M17.3 17.3l1.4 1.4M5.3 18.7l1.4-1.4M17.3 6.7l1.4-1.4"/></g></symbol>
     <symbol id="i-moon" viewBox="0 0 24 24"><path d="M20 14.5A8 8 0 0 1 9.5 4a8 8 0 1 0 10.5 10.5Z" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linejoin="round"/></symbol>
@@ -96,7 +95,6 @@
     <button data-theme-set="light" aria-pressed="false"><svg><use href="#i-sun"/></svg><span data-i18n="theme.light">Ақ</span></button>
     <button data-theme-set="dark" aria-pressed="false"><svg><use href="#i-moon"/></svg><span data-i18n="theme.dark">Қара</span></button>
   </div>
-  <button class="cart-btn" id="cartBtn" aria-label="Корзина"><svg><use href="#i-cart"/></svg><b id="cartCount">0</b></button>
 </header>
 
 <main id="top">
@@ -177,19 +175,7 @@
   <div class="footer__bottom"><span>© 2026 Hassaq · Ақтөбе</span><span data-i18n="f.bye">Ас болсын!</span></div>
 </footer>
 
-<!-- cart drawer -->
-<div class="drawer" id="drawer" aria-hidden="true">
-  <div class="drawer__shade" data-close></div>
-  <aside class="drawer__panel">
-    <div class="drawer__head"><h3 data-i18n="cart.title">Корзина</h3><button data-close aria-label="Закрыть">✕</button></div>
-    <div class="drawer__list" id="cartList"></div>
-    <div class="drawer__foot">
-      <div class="drawer__total"><span data-i18n="cart.total">Итого</span><b id="cartTotal">0 тг</b></div>
-      <button class="btn btn--orange btn--block" data-order data-i18n="cart.checkout">Заказать</button>
-      <p data-i18n="cart.note">Заказ оформляется в приложении Glovo. Корзина здесь — чтобы собрать заказ и посчитать сумму.</p>
-    </div>
-  </aside>
-</div>
+<button class="delivery-float" data-order><span data-i18n="direct.delivery">Заказать доставку</span><span aria-hidden="true">↗</span></button>
 
 <!-- story viewer -->
 <div class="story" id="story" aria-hidden="true">
@@ -204,10 +190,10 @@
 
 <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.13.0/gsap.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.13.0/ScrollTrigger.min.js"></script>
-<script src="menu-v3.js?v=12"></script>
-<script src="i18n.js?v=12"></script>
-<script src="order.js?v=12"></script>
-<script src="music.js?v=12"></script>
-<script src="main.js?v=13"></script>
+<script src="menu-v3.js?v=14"></script>
+<script src="i18n.js?v=14"></script>
+<script src="order.js?v=14"></script>
+<script src="music.js?v=14"></script>
+<script src="main.js?v=14"></script>
 </body>
 </html>

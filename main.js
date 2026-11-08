@@ -287,7 +287,7 @@
   $('#storyNext').addEventListener('click', () => showStory(si + 1));
   $('#storyPrev').addEventListener('click', () => showStory(si - 1));
   storyEl.addEventListener('click', e => { if (e.target === storyEl || e.target.closest('[data-sclose]')) closeStory(); });
-  addEventListener('keydown', e => { if (e.key === 'Escape') { closeStory(); closeCart(); } });
+  addEventListener('keydown', e => { if (e.key === 'Escape') { closeStory(); } });
 
   /* =========================================================
      BANNER CAROUSEL
@@ -360,7 +360,7 @@
         c.innerHTML = `<div class="card__img">${d.tag ? `<span class="card__tag">${d.tag}</span>` : ''}</div>
           <h3>${d.name}</h3>
           ${d.desc ? `<p>${d.desc}</p>` : ''}
-          <div class="card__foot"><div class="card__price">${fmt(it.price)}<small>${d.weight}</small></div><div class="card__ctl"></div></div>`;
+          <div class="card__foot"><div class="card__price">${fmt(it.price)}<small>${d.weight}</small></div><button class="card__order" data-order>${HQ.t('direct.button')} ↗</button></div>`;
         photo($('.card__img', c), it.photo, d.name);
         grid.appendChild(c);
       });
@@ -397,53 +397,7 @@
     ScrollTrigger.refresh();
   });
 
-  /* =========================================================
-     CART
-     ========================================================= */
-  let cart = store.get('hassaq-cart', {});
-  const byId = Object.fromEntries(MENU.map(m => [m.id, m]));
-  Object.keys(cart).forEach(k => { if (!byId[k]) delete cart[k]; });
-  const drawer = $('#drawer');
-  const openCart = () => { drawer.classList.add('is-open'); drawer.setAttribute('aria-hidden', 'false'); };
-  function closeCart() { drawer.classList.remove('is-open'); drawer.setAttribute('aria-hidden', 'true'); }
-  $('#cartBtn').addEventListener('click', openCart);
-  drawer.addEventListener('click', e => { if (e.target.closest('[data-close]')) closeCart(); });
-
-  const qtyHTML = (id, n) => `<div class="qty"><button data-dec="${id}" aria-label="−">−</button><b>${n}</b><button data-inc="${id}" aria-label="+">+</button></div>`;
-  function renderCart() {
-    store.set('hassaq-cart', cart);
-    const ids = Object.keys(cart);
-    const count = ids.reduce((s, k) => s + cart[k], 0);
-    const total = ids.reduce((s, k) => s + cart[k] * byId[k].price, 0);
-    $('#cartCount').textContent = count;
-    $('#cartTotal').textContent = fmt(total);
-    $('#cartList').innerHTML = ids.length ? ids.map(k => `<div class="ci"><div class="ci__name">${HQ.dish(byId[k]).name}<small>${fmt(byId[k].price)}</small></div>${qtyHTML(k, cart[k])}</div>`).join('')
-      : `<p class="drawer__empty">${HQ.t('cart.empty')}</p>`;
-    $$('.card').forEach(c => {
-      const n = cart[c.dataset.id] || 0;
-      $('.card__ctl', c).innerHTML = n ? qtyHTML(c.dataset.id, n) : `<button class="add" data-add="${c.dataset.id}" aria-label="${HQ.t('add')}">+</button>`;
-    });
-  }
-  function flyFrom(el) {
-    if (reduce) return;
-    const a = el.getBoundingClientRect(), b = $('#cartBtn').getBoundingClientRect();
-    const d = document.createElement('div'); d.className = 'fly'; document.body.appendChild(d);
-    gsap.set(d, { x: a.left + a.width / 2, y: a.top + a.height / 2 });
-    gsap.timeline({ onComplete: () => { d.remove(); const cb = $('#cartBtn'); cb.classList.remove('bump'); void cb.offsetWidth; cb.classList.add('bump'); } })
-      .to(d, { x: b.left + b.width / 2, duration: .7, ease: 'power1.inOut' }, 0)
-      .to(d, { y: b.top + b.height / 2, duration: .7, ease: 'back.in(1.6)' }, 0)
-      .to(d, { scale: .4, duration: .7 }, 0);
-  }
-  document.addEventListener('click', e => {
-    const add = e.target.closest('[data-add]'), inc = e.target.closest('[data-inc]'), dec = e.target.closest('[data-dec]');
-    if (add) { const id = add.dataset.add; cart[id] = 1; flyFrom(add); renderCart(); }
-    else if (inc) { cart[inc.dataset.inc]++; renderCart(); }
-    else if (dec) { const id = dec.dataset.dec; if (--cart[id] <= 0) delete cart[id]; renderCart(); }
-  });
-  renderCart();
-  // order hand-off (order.js): current cart for Glovo / Яндекс Еда
-  if (window.HQOrder) HQOrder.getCart = () => Object.keys(cart).map(k => ({ name: HQ.dish(byId[k]).name, qty: cart[k], price: byId[k].price }));
-  $('#drawer').addEventListener('click', e => { if (e.target.closest('[data-order]')) closeCart(); });
+  try { localStorage.removeItem('hassaq-cart'); localStorage.removeItem('hassaq-order-mode'); } catch {}
 
   /* =========================================================
      LANGUAGE — ҚАЗ / РУС
@@ -457,7 +411,7 @@
   langBox.addEventListener('click', e => { const b = e.target.closest('[data-lang-set]'); if (b) HQ.set(b.dataset.langSet); });
   addEventListener('hassaq-lang', () => {
     gsap.fromTo('#catalog, #storiesRow, .banner, .about-mini', { opacity: .3 }, { opacity: 1, duration: .5 });
-    renderStories(); buildCatalog(); renderCart(); syncLang(); syncSwitch();
+    renderStories(); buildCatalog(); syncLang(); syncSwitch();
     const q = $('#search').value; if (q) $('#search').dispatchEvent(new Event('input'));
     if (window.HassaqMusic && HassaqMusic.mode === 'file') $('.music__label').textContent = 'Көңіл толқыны';
   });

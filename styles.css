@@ -404,3 +404,24 @@ h2{font-family:var(--serif);font-weight:400;line-height:1.05}
 .sb > :not(.sb__bg){position:relative;z-index:1}
 .sb__bg img{object-fit:contain;object-position:center 18%;height:70%}
 .sb__bg::after{background:linear-gradient(0deg,rgba(26,10,5,.97) 0%,rgba(26,10,5,.88) 28%,rgba(26,10,5,.08) 65%,transparent 100%)}
+
+/* Direct delivery replaces the local cart. */
+.card__order{padding:10px 14px;border:1px solid var(--line);border-radius:999px;font-size:12px;font-weight:800;color:var(--accent);min-height:44px;white-space:nowrap;transition:background .2s}
+.card__order:hover{background:var(--surface-2)}
+.delivery-float{position:fixed;right:22px;bottom:calc(20px + env(safe-area-inset-bottom));z-index:50;display:flex;align-items:center;gap:22px;padding:16px 22px;border-radius:999px;background:var(--orange);color:var(--ink);font-weight:800;font-size:14px;box-shadow:0 8px 32px #0003}
+body.locked .delivery-float{visibility:hidden}
+.footer{padding-bottom:110px}
+.delivery-dialog{position:fixed;inset:0;margin:auto;width:min(440px,calc(100% - 32px));max-height:calc(100dvh - 40px);overflow:auto;border:1px solid var(--line);border-radius:24px;padding:34px 28px 26px;background:var(--surface);color:var(--text);box-shadow:0 30px 100px #0005}
+.delivery-dialog::backdrop{background:rgba(20,8,4,.65)}
+.delivery-close{position:absolute;right:12px;top:10px;width:44px;height:44px;font-size:28px;border-radius:50%}
+.delivery-eyebrow{font-size:10px;letter-spacing:.2em;color:var(--muted);margin:6px 0 20px}
+.delivery-dialog h2{font-size:34px;margin-bottom:12px;padding-right:10px}
+#delivery-description{font-size:14px;line-height:1.6;color:var(--muted)}
+.delivery-services{display:grid;gap:12px;margin:24px 0 18px}
+.delivery-service{display:flex;align-items:center;justify-content:space-between;gap:12px;padding:22px 18px;border-radius:16px;transition:transform .2s}
+.delivery-service:hover{transform:translateY(-2px)}
+.delivery-service b{font-size:20px}.delivery-service span{font-size:12px;font-weight:700}
+.delivery-service--glovo{background:#ffc244;color:#005c45}.delivery-service--yandex{background:#fce000;color:#21201f}
+.delivery-note{font-size:12px;line-height:1.6;color:var(--muted)}
+.delivery-dialog :focus-visible,.delivery-float:focus-visible,.card__order:focus-visible{outline:2px solid var(--accent);outline-offset:4px}
+@media(max-width:600px){.delivery-float{right:14px;gap:12px;font-size:12px;padding:14px 18px}.music{left:14px;bottom:calc(20px + env(safe-area-inset-bottom))}.music__label{display:none}.card__order{padding:8px 10px;font-size:11px}.card__foot{gap:8px;flex-wrap:wrap}.delivery-dialog{padding:30px 20px 22px}.delivery-dialog h2{font-size:30px}}
