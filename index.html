@@ -21,7 +21,7 @@
   l=q==='1'||(q!=='0'&&((n.hardwareConcurrency&&n.hardwareConcurrency<=4)||(n.deviceMemory&&n.deviceMemory<=2)||c.saveData||/(^|-)2g/.test(c.effectiveType||'')||matchMedia('(prefers-reduced-motion: reduce)').matches));
   if(l)document.documentElement.classList.add('lite')})();
 </script>
-<link rel="stylesheet" href="styles.css?v=14">
+<link rel="stylesheet" href="styles.css?v=15">
 </head>
 <body class="locked">
 
@@ -165,14 +165,21 @@
 
 <footer class="footer" id="footer">
   <div class="footer__top">
-    <a href="#top" class="logo logo--light"><img src="assets/ornament-96.webp" width="46" height="46" alt="" loading="lazy" decoding="async"><span>HASSAQ</span></a>
+    <div class="footer__identity"><a href="#top" class="logo logo--light"><img src="assets/ornament-96.webp" width="46" height="46" alt="" loading="lazy" decoding="async"><span>HASSAQ</span></a>
+      <div class="footer__contact">
+        <p data-i18n="footer.call">Всегда на связи</p>
+        <a class="footer__phone" href="tel:+77759549070">
+          <span class="footer__phone-icon" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M22 16.9v3a2 2 0 0 1-2.2 2A19.8 19.8 0 0 1 3.1 5.2 2 2 0 0 1 5.1 3h3a2 2 0 0 1 2 1.7c.1.9.4 1.8.7 2.6a2 2 0 0 1-.5 2.1L9 10.7a16 16 0 0 0 4.3 4.3l1.3-1.3a2 2 0 0 1 2.1-.5c.8.3 1.7.6 2.6.7a2 2 0 0 1 1.7 2Z"/></svg></span>
+          <span>+7 775 954 90 70<small data-i18n="footer.callHint">Позвонить в HASSAQ ↗</small></span>
+        </a>
+      </div>
+    </div>
     <div class="footer__cols">
       <div><b data-i18n="f.menu">Меню</b><a href="#cat-doner" data-i18n="cat.doner">Донеры</a><a href="#cat-burger" data-i18n="cat.burger">Бургеры</a><a href="#cat-pizza" data-i18n="cat.pizza">Пицца</a><a href="#cat-drinks" data-i18n="cat.drinks">Напитки</a></div>
       <div><b>Hassaq</b><a href="#stories" data-i18n="f.promo">Акции</a><a href="https://2gis.kz/aktobe/branches/70000001100802005" target="_blank" rel="noopener" data-i18n="f.address">Адрес в 2ГИС</a></div>
       <div><b data-i18n="f.social">Мы в сети</b><a href="https://www.instagram.com/hassaq.kz/" target="_blank" rel="noopener">Instagram @hassaq.kz</a><a href="https://glovoapp.com/ru/kz/aktobe/stores/hassaq-akx" target="_blank" rel="noopener">Glovo</a><a href="https://eda.yandex.kz/ru-kz/Actobe/r/hassaq" target="_blank" rel="noopener">Яндекс Еда</a></div>
     </div>
   </div>
-  <div style="margin-top:32px"><a href="tel:+77759549070" style="display:inline-flex;align-items:center;gap:12px;min-height:44px;color:var(--cream);font-size:clamp(22px,4vw,30px);font-weight:700;white-space:nowrap"><span aria-hidden="true">☎</span> +7 775 954 90 70</a></div>
   <div class="footer__bottom"><span>© 2026 Hassaq · Ақтөбе</span><span data-i18n="f.bye">Ас болсын!</span></div>
 </footer>
 
@@ -192,7 +199,7 @@
 <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.13.0/gsap.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.13.0/ScrollTrigger.min.js"></script>
 <script src="menu-v3.js?v=14"></script>
-<script src="i18n.js?v=14"></script>
+<script src="i18n.js?v=15"></script>
 <script src="order.js?v=14"></script>
 <script src="music.js?v=14"></script>
 <script src="main.js?v=14"></script>

@@ -425,3 +425,15 @@ body.locked .delivery-float{visibility:hidden}
 .delivery-note{font-size:12px;line-height:1.6;color:var(--muted)}
 .delivery-dialog :focus-visible,.delivery-float:focus-visible,.card__order:focus-visible{outline:2px solid var(--accent);outline-offset:4px}
 @media(max-width:600px){.delivery-float{right:14px;gap:12px;font-size:12px;padding:14px 18px}.music{left:14px;bottom:calc(20px + env(safe-area-inset-bottom))}.music__label{display:none}.card__order{padding:8px 10px;font-size:11px}.card__foot{gap:8px;flex-wrap:wrap}.delivery-dialog{padding:30px 20px 22px}.delivery-dialog h2{font-size:30px}}
+
+/* Contact sits in the left footer column, alongside the menu. */
+.footer__identity{display:flex;flex-direction:column;align-items:flex-start;gap:32px;min-width:0}
+.footer__contact{padding-top:22px;border-top:1px solid rgba(243,178,92,.22)}
+.footer__contact>p{font-size:11px;letter-spacing:.12em;text-transform:uppercase;color:var(--amber);margin-bottom:14px}
+.footer__phone{display:flex;align-items:center;gap:14px;color:var(--cream);font-size:clamp(20px,2.3vw,30px);font-weight:700;line-height:1.3;white-space:nowrap;min-height:58px}
+.footer__phone-icon{display:grid;place-items:center;width:48px;height:48px;flex:none;border-radius:50%;background:rgba(243,178,92,.08);border:1px solid rgba(243,178,92,.25);color:var(--amber);transition:background .2s,transform .2s}
+.footer__phone-icon svg{width:22px;height:22px}
+.footer__phone small{display:block;margin-top:7px;font-size:12px;font-weight:400;color:rgba(246,236,220,.6)}
+.footer__phone:hover{color:var(--amber)}.footer__phone:hover .footer__phone-icon{background:rgba(243,178,92,.16);transform:rotate(-8deg)}
+.footer__phone:focus-visible{outline:2px solid var(--amber);outline-offset:8px;border-radius:8px}
+@media(max-width:600px){.footer__identity{width:100%;gap:24px}.footer__contact{width:100%}.footer__phone{font-size:22px;gap:10px}.footer__phone-icon{width:42px;height:42px}}
