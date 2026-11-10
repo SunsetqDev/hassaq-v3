@@ -21,7 +21,7 @@
   l=q==='1'||(q!=='0'&&((n.hardwareConcurrency&&n.hardwareConcurrency<=4)||(n.deviceMemory&&n.deviceMemory<=2)||c.saveData||/(^|-)2g/.test(c.effectiveType||'')||matchMedia('(prefers-reduced-motion: reduce)').matches));
   if(l)document.documentElement.classList.add('lite')})();
 </script>
-<link rel="stylesheet" href="styles.css?v=15">
+<link rel="stylesheet" href="styles.css?v=16">
 </head>
 <body class="locked">
 
@@ -153,6 +153,43 @@
     </div>
   </section>
 
+  <section class="guest-reviews" id="reviews" aria-labelledby="reviews-title">
+    <div class="guest-reviews__head">
+      <div><p class="guest-reviews__eyebrow" data-i18n="reviews.eyebrow">СЛОВО НАШИМ ГОСТЯМ</p>
+        <h2 id="reviews-title" data-i18n="reviews.title">Тепло, которое возвращается.</h2>
+        <p class="guest-reviews__intro" data-i18n="reviews.intro">Избранные слова гостей о вкусе и гостеприимстве HASSAQ.</p>
+      </div>
+      <span class="guest-reviews__badge"><span class="guest-reviews__dot" aria-hidden="true"></span><span data-i18n="reviews.badge">4 филиала · 2ГИС</span></span>
+    </div>
+    <div class="guest-reviews__grid">
+      <figure class="guest-review">
+        <div class="guest-review__top"><span class="guest-review__branch" data-i18n="reviews.branch0">Мәңгілік Ел, 18</span><span class="guest-review__quote" aria-hidden="true">“</span></div>
+        <blockquote cite="https://2gis.kz/aktobe/firm/70000001100802006/tab/reviews" lang="ru"><p>Арсен повар лучший, красавчик, четко готовит! Честно сильно понравилось, он сам хороший такой!</p></blockquote>
+        <figcaption><span class="guest-review__avatar" aria-hidden="true">N</span><span><b>Nursat</b><small data-i18n="reviews.guest">Гость HASSAQ · 2ГИС</small></span></figcaption>
+        <a class="guest-review__source" href="https://2gis.kz/aktobe/firm/70000001100802006/tab/reviews" target="_blank" rel="noopener noreferrer"><span data-i18n="reviews.source">Отзывы филиала в 2ГИС</span><span aria-hidden="true">↗</span></a>
+      </figure>
+      <figure class="guest-review">
+        <div class="guest-review__top"><span class="guest-review__branch" data-i18n="reviews.branch1">Абилкайыр хана, 66Б</span><span class="guest-review__quote" aria-hidden="true">“</span></div>
+        <blockquote cite="https://2gis.kz/aktobe/firm/70000001110316490/tab/reviews" lang="ru"><p>Классное обслуживание и очень вкусно</p></blockquote>
+        <figcaption><span class="guest-review__avatar" aria-hidden="true">TE</span><span><b>Tursynai Elemes</b><small data-i18n="reviews.guest">Гость HASSAQ · 2ГИС</small></span></figcaption>
+        <a class="guest-review__source" href="https://2gis.kz/aktobe/firm/70000001110316490/tab/reviews" target="_blank" rel="noopener noreferrer"><span data-i18n="reviews.source">Отзывы филиала в 2ГИС</span><span aria-hidden="true">↗</span></a>
+      </figure>
+      <figure class="guest-review">
+        <div class="guest-review__top"><span class="guest-review__branch" data-i18n="reviews.branch2">Алии Молдагуловой, 72а</span><span class="guest-review__quote" aria-hidden="true">“</span></div>
+        <blockquote cite="https://2gis.kz/aktobe/firm/70000001112990922/tab/reviews" lang="ru"><p>Было очень вкусно и быстро готовят мне понравился ещё вернусь обслуживание на высшем уровне.</p></blockquote>
+        <figcaption><span class="guest-review__avatar" aria-hidden="true">KD</span><span><b>Kurmet Dulatuly</b><small data-i18n="reviews.guest">Гость HASSAQ · 2ГИС</small></span></figcaption>
+        <a class="guest-review__source" href="https://2gis.kz/aktobe/firm/70000001112990922/tab/reviews" target="_blank" rel="noopener noreferrer"><span data-i18n="reviews.source">Отзывы филиала в 2ГИС</span><span aria-hidden="true">↗</span></a>
+      </figure>
+      <figure class="guest-review">
+        <div class="guest-review__top"><span class="guest-review__branch" data-i18n="reviews.branch3">Алга · 5-й микрорайон, 2</span><span class="guest-review__quote" aria-hidden="true">“</span></div>
+        <blockquote cite="https://2gis.kz/aktobe/firm/70000001088976227/tab/reviews" lang="ru"><p>Все супер еда вкусная обслуживание хороший мнн все понравилось 🥰</p></blockquote>
+        <figcaption><span class="guest-review__avatar" aria-hidden="true">A</span><span><b>Ali 34</b><small data-i18n="reviews.guest">Гость HASSAQ · 2ГИС</small></span></figcaption>
+        <a class="guest-review__source" href="https://2gis.kz/aktobe/firm/70000001088976227/tab/reviews" target="_blank" rel="noopener noreferrer"><span data-i18n="reviews.source">Отзывы филиала в 2ГИС</span><span aria-hidden="true">↗</span></a>
+      </figure>
+    </div>
+    <p class="guest-reviews__note" data-i18n="reviews.note">Короткие цитаты из отзывов в 2ГИС. Орфография авторов сохранена.</p>
+  </section>
+
   <section class="about-mini" id="visit" aria-labelledby="about-title">
     <div class="about-mini__copy">
       <p class="about-mini__label">HASSAQ · АҚТӨБЕ</p>
@@ -199,7 +236,7 @@
 <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.13.0/gsap.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.13.0/ScrollTrigger.min.js"></script>
 <script src="menu-v3.js?v=14"></script>
-<script src="i18n.js?v=15"></script>
+<script src="i18n.js?v=16"></script>
 <script src="order.js?v=14"></script>
 <script src="music.js?v=14"></script>
 <script src="main.js?v=14"></script>
